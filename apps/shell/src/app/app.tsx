@@ -5,12 +5,12 @@ import NxWelcome from './nx-welcome';
 
 import { Route, Routes, Link } from 'react-router-dom';
 
-const Mfe1 = React.lazy(() => import('mfe1/mfe1'));
+const Mfe1 = React.lazy(() => import('mfe1/App'));
 
 export function App() {
   return (
     <div>
-      <NxWelcome title="@mfe-white-label/shell" />
+
 
       {/* START: routes */}
       {/* These routes and navigation have been generated for you */}
@@ -55,7 +55,7 @@ export function App() {
           }
         />
       </Routes>
-      {/* END: routes */}
+     <NxWelcome title="@mfe-white-label/shell" />
     </div>
   );
 }

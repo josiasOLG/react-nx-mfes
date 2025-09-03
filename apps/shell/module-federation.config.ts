@@ -4,7 +4,17 @@ const config: ModuleFederationConfig = {
   name: 'shell',
   remotes: [
     ['mfe1', 'http://localhost:4201/remoteEntry.js']
-  ]
+  ],
+  shared: (libraryName, sharedConfig) => {
+    if (libraryName === 'react' || libraryName === 'react-dom') {
+      return {
+        singleton: true,
+        eager: true,
+        requiredVersion: sharedConfig.requiredVersion,
+      };
+    }
+    return false;
+  }
 };
 
 /**
