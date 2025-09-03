@@ -1,0 +1,87 @@
+{
+  "name": "mfe1",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mfes/mfe1/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "apps/mfes/mfe1/dist",
+        "index": "apps/mfes/mfe1/src/index.html",
+        "baseHref": "/",
+        "main": "apps/mfes/mfe1/src/main.ts",
+        "tsConfig": "apps/mfes/mfe1/tsconfig.app.json",
+        "assets": [
+          "apps/mfes/mfe1/src/favicon.ico",
+          "apps/mfes/mfe1/src/assets"
+        ],
+        "styles": ["apps/mfes/mfe1/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/mfes/mfe1/webpack.config.ts"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/mfes/mfe1/src/environments/environment.ts",
+              "with": "apps/mfes/mfe1/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "webpackConfig": "apps/mfes/mfe1/webpack.config.prod.ts"
+        }
+      },
+      "dependsOn": ["^build", "typecheck"]
+    },
+    "serve": {
+      "executor": "@nx/react:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mfe1:build",
+        "hmr": true,
+        "port": 4201
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mfe1:build:development"
+        },
+        "production": {
+          "buildTarget": "mfe1:build:production",
+          "hmr": false
+        }
+      },
+      "dependsOn": ["typecheck"]
+    },
+    "serve-static": {
+      "executor": "@nx/react:module-federation-static-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "serveTarget": "mfe1:serve"
+      },
+      "configurations": {
+        "development": {
+          "serveTarget": "mfe1:serve:development"
+        },
+        "production": {
+          "serveTarget": "mfe1:serve:production"
+        }
+      }
+    }
+  }
+}
