@@ -3,7 +3,7 @@ import { ModuleFederationConfig } from '@nx/module-federation';
 const config: ModuleFederationConfig = {
   name: 'shell',
   remotes: [
-    ['mfe1', 'mfe1@http://localhost:4201/remoteEntry.js']
+    ['mfe1', 'http://localhost:4201/remoteEntry.js']
   ]
 };
 
